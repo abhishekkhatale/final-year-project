@@ -106,18 +106,18 @@ const LoginModal = ({ onClose, onLogin }) => {
           </button>
         </form>
 
-        <div className="p-4 border-t border-gray-200 text-center text-gray-700">
+        <Link to="/signup" className="p-4 border-t border-gray-200 text-center text-gray-700">
           <p>
             Don't have an account?{" "}
-            <Link
-            to="/signup"
+            <span
+              
               className="text-black font-medium hover:opacity-80 transition-opacity"
               onClick={() => onClose()}
             >
               Sign Up
-            </Link>
+            </span>
           </p>
-        </div>
+        </Link>
       </div>
     </div>
   )
