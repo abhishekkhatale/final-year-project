@@ -66,7 +66,7 @@ const LoginModal = ({ onClose, onLogin }) => {
         </div>
 
         {/* Form */}
-        <form className="pt-5 px-5" onSubmit={handleSubmit}>
+        <form className="p-5 " onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-100 text-red-600 p-3 rounded-md mb-5 text-sm">
               {error}
