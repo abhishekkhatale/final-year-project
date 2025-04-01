@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   FiMenu, 
   FiX, 
@@ -14,6 +15,7 @@ import {
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,17 +25,11 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const middleItems = [
-    { name: 'Dashboard', href: '/dashboard', icon: <FiHome className="h-5 w-5" /> },
-    { name: 'AI Roadmap', href: '/ai-roadmap', icon: <FiMap className="h-5 w-5" /> },
-    { name: 'AI Mentor', href: '/ai-mentor', icon: <FiAward className="h-5 w-5" /> },
-    { name: 'Study Material', href: '/studymaterial', icon: <FiBook className="h-5 w-5" /> }
-  ];
-
-  const rightItems = [
-    { name: 'Admin Panel', href: '/admin', icon: <FiSettings className="h-5 w-5" /> },
-    { name: 'Logout', href: '/logout', icon: <FiLogOut className="h-5 w-5" /> }
-  ];
+  const handleLogout = (e) => {
+    e.preventDefault();
+    // Add any logout logic here (clearing tokens, etc.)
+    navigate('/login');
+  };
 
   return (
     <header className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-white'}`}>
@@ -41,38 +37,61 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Left - Logo/Brand */}
           <div className="flex-shrink-0 flex items-center">
-            
-            <span className="ml-2 text-xl font-bold text-black hidden sm:block">Webroom</span>
+            <Link to="/dashboard" className="ml-2 text-xl font-bold text-black hidden sm:block">
+              Webroom
+            </Link>
           </div>
 
           {/* Middle - Navigation (Desktop) */}
           <div className="hidden md:flex md:items-center md:justify-center md:flex-1">
             <nav className="flex space-x-8">
-              {middleItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
-                >
-                  {item.icon}
-                  <span className="ml-2">{item.name}</span>
-                </a>
-              ))}
+              <Link
+                to="/dashboard"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
+              >
+                <FiHome className="h-5 w-5" />
+                <span className="ml-2">Dashboard</span>
+              </Link>
+              <Link
+                to="/ai-roadmap"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
+              >
+                <FiMap className="h-5 w-5" />
+                <span className="ml-2">AI Roadmap</span>
+              </Link>
+              <Link
+                to="/ai-mentor"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
+              >
+                <FiAward className="h-5 w-5" />
+                <span className="ml-2">AI Mentor</span>
+              </Link>
+              <Link
+                to="/studymaterial"
+                className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
+              >
+                <FiBook className="h-5 w-5" />
+                <span className="ml-2">Study Material</span>
+              </Link>
             </nav>
           </div>
 
           {/* Right - Actions (Desktop) */}
           <div className="hidden md:flex items-center space-x-4">
-            {rightItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className={`inline-flex items-center px-3 py-2 text-sm font-medium rounded-md ${item.name === 'Logout' ? 'text-red-600 hover:bg-red-50' : 'text-gray-700 hover:bg-gray-50'} transition-colors`}
-              >
-                {item.icon}
-                <span className="ml-2">{item.name}</span>
-              </a>
-            ))}
+            <Link
+              to="/admin"
+              className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+            >
+              <FiSettings className="h-5 w-5" />
+              <span className="ml-2">Admin Panel</span>
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center px-3 py-2 text-sm font-medium rounded-md text-red-600 hover:bg-red-50 transition-colors"
+            >
+              <FiLogOut className="h-5 w-5" />
+              <span className="ml-2">Logout</span>
+            </button>
           </div>
 
           {/* Mobile menu button */}
@@ -97,30 +116,59 @@ const Header = () => {
       {isOpen && (
         <div className="md:hidden bg-white shadow-lg">
           <div className="pt-2 pb-3 space-y-1">
-            {middleItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="flex items-center px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
-                onClick={() => setIsOpen(false)}
-              >
-                {item.icon}
-                <span className="ml-3">{item.name}</span>
-              </a>
-            ))}
+            <Link
+              to="/dashboard"
+              className="flex items-center px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <FiHome className="h-5 w-5" />
+              <span className="ml-3">Dashboard</span>
+            </Link>
+            <Link
+              to="/ai-roadmap"
+              className="flex items-center px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <FiMap className="h-5 w-5" />
+              <span className="ml-3">AI Roadmap</span>
+            </Link>
+            <Link
+              to="/ai-mentor"
+              className="flex items-center px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <FiAward className="h-5 w-5" />
+              <span className="ml-3">AI Mentor</span>
+            </Link>
+            <Link
+              to="/studymaterial"
+              className="flex items-center px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <FiBook className="h-5 w-5" />
+              <span className="ml-3">Study Material</span>
+            </Link>
           </div>
           <div className="pt-4 pb-3 border-t border-gray-200">
-            {rightItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className={`flex items-center px-3 py-2 text-base font-medium ${item.name === 'Logout' ? 'text-red-600 hover:bg-red-50' : 'text-gray-700 hover:bg-gray-50'} transition-colors`}
-                onClick={() => setIsOpen(false)}
-              >
-                {item.icon}
-                <span className="ml-3">{item.name}</span>
-              </a>
-            ))}
+            <Link
+              to="/admin"
+              className="flex items-center px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <FiSettings className="h-5 w-5" />
+              <span className="ml-3">Admin Panel</span>
+            </Link>
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                handleLogout(e);
+                setIsOpen(false);
+              }}
+              className="w-full flex items-center px-3 py-2 text-base font-medium text-red-600 hover:bg-red-50 transition-colors"
+            >
+              <FiLogOut className="h-5 w-5" />
+              <span className="ml-3">Logout</span>
+            </button>
           </div>
         </div>
       )}

@@ -87,7 +87,7 @@ const SignupModal = ({ onClose, onSignup }) => {
                 onClick={() => typeof onClose === "function" && onClose()}
                 disabled={loading}
               >
-                <FiX size={20} />
+               <Link to="/"><FiX size={20} /></Link>
               </button>
             </div>
 
