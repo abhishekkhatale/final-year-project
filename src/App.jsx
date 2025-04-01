@@ -1,8 +1,11 @@
 import React from 'react'
+import Landing from './Pages/Landing'
 
 function App() {
   return (
-    <div>App</div>
+    <div>
+      <Landing/>
+    </div>
   )
 }
 
