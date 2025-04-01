@@ -11,14 +11,12 @@ function Landing() {
   return (
     <div className="min-h-screen bg-white">
       <Navbar />
-      <main>
         <Hero />
         <Features />
         <HowItWorks />
         <Reviews />
         <Testimonials />
         <CallToAction />
-      </main>
       <Footer />
     </div>
   )

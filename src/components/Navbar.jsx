@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { FiMenu, FiX } from "react-icons/fi"
+import { Link } from "react-router-dom"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -15,9 +16,9 @@ export default function Navbar() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <a href="/" className="flex items-center">
-              <span className="text-xl font-bold tracking-tight text-black">WebRoom</span>
-            </a>
+            <div  className="flex items-center">
+              <Link to="/" className="text-xl font-bold tracking-tight text-black">WebRoom</Link>
+            </div>
           </div>
 
           {/* Desktop Navigation */}
@@ -31,12 +32,16 @@ export default function Navbar() {
             <a href="#reviews" className="text-sm font-medium text-gray-700 hover:text-black transition-colors">
               Reviews
             </a>
-            <button className="ml-4 px-4 py-2 border border-black rounded-md text-sm font-medium text-black hover:bg-gray-50 transition-colors">
+            <Link to="/login" className="ml-4 px-4 py-2 border border-black rounded-md text-sm font-medium text-black hover:bg-gray-50 transition-colors">
+            
               Log In
-            </button>
-            <button className="px-4 py-2 bg-black rounded-md text-sm font-medium text-white hover:bg-gray-800 transition-colors">
-              Get Started
-            </button>
+            
+            </Link>
+            <Link to="/signup" className="px-4 py-2 bg-black rounded-md text-sm font-medium text-white hover:bg-gray-800 transition-colors">
+            
+              Sign up
+            
+            </Link>
           </nav>
 
           {/* Mobile menu button */}
