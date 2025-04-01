@@ -23,7 +23,7 @@ const LoginModal = ({ onClose, onLogin }) => {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#f8f8f8] bg-opacity-50 flex items-center justify-center z-50 transition-opacity duration-300">
+    <div className=" px-5 py-20 inset-0 bg-[#f8f8f8] bg-opacity-50 flex items-center justify-center  transition-opacity duration-300">
       <div className="bg-white rounded-lg w-full max-w-md shadow-xl transform transition-all duration-300">
         <div className="flex justify-between items-center p-5 border-b border-gray-200">
           <h2 className="text-xl font-semibold">Login to WebRoom</h2>

@@ -29,7 +29,7 @@ const SignupModal = ({ onClose, onSignup }) => {
   };
 
   return (
-    <div className="py-10 inset-0 bg-[#f8f8f8] bg-opacity-50 flex items-center justify-center transition-opacity duration-300">
+    <div className=" px-5 py-10 inset-0 bg-[#f8f8f8] bg-opacity-50 flex items-center justify-center transition-opacity duration-300">
       <div className="bg-white rounded-lg w-full max-w-2xl shadow-xl transform transition-all duration-300">
         {/* Header */}
         <div className="flex justify-between items-center p-5 border-b border-gray-200">
