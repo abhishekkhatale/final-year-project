@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { FiMenu, FiX } from "react-icons/fi"
-import { Link } from "react-router-dom"
+import { Link, Links } from "react-router-dom"
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -88,12 +88,12 @@ export default function Navbar() {
               Reviews
             </a>
             <div className="mt-4 flex flex-col space-y-2">
-              <button className="w-full px-4 py-2 border border-black rounded-md text-base font-medium text-black hover:bg-gray-50 transition-colors">
+              <Link to="/login" className="w-full px-4 py-2 border border-black rounded-md text-base font-medium text-black hover:bg-gray-50 transition-colors">
                 Log In
-              </button>
-              <button className="w-full px-4 py-2 bg-black rounded-md text-base font-medium text-white hover:bg-gray-800 transition-colors">
-                Get Started
-              </button>
+              </Link>
+              <Link to="/signup" className="w-full px-4 py-2 bg-black rounded-md text-base font-medium text-white hover:bg-gray-800 transition-colors">
+                Signup
+              </Link>
             </div>
           </div>
         </div>
