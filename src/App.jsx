@@ -4,6 +4,7 @@ import Landing from "./Pages/Landing";
 import LoginModal from "./components/LoginModal";
 import SignupModal from "./components/SignupModal";
 import Dashboard from "./Pages/Dashboard";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/login" element={<LoginModal />} />
       <Route path="/signup" element={<SignupModal />} />
       <Route path="/dashboard" element={<Dashboard/>}/>
+      <Route path="*" element={<NotFound/>} />
       
     </Routes>
   );
