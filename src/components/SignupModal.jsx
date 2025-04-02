@@ -55,7 +55,7 @@ const SignupModal = ({ onClose, onSignup }) => {
         if (typeof onClose === "function") {
           onClose();
         }
-        navigate("/login");
+        navigate("/login"); // Kept as /login
       }, 2000);
 
     } catch (err) {
@@ -87,7 +87,7 @@ const SignupModal = ({ onClose, onSignup }) => {
                 onClick={() => typeof onClose === "function" && onClose()}
                 disabled={loading}
               >
-               <Link to="/"><FiX size={20} /></Link>
+               <Link to="/landing"><FiX size={20} /></Link> {/* Changed from / to /landing */}
               </button>
             </div>
 
