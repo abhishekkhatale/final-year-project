@@ -35,7 +35,7 @@ const LoginModal = ({ onClose, onLogin }) => {
         onLogin(response.data);
       }
 
-      navigate("/"); // Changed from /dashboard to /
+      navigate("/dashboard");
       if (typeof onClose === "function") {
         onClose();
       }
@@ -61,7 +61,7 @@ const LoginModal = ({ onClose, onLogin }) => {
             onClick={() => typeof onClose === "function" && onClose()}
             disabled={loading}
           >
-            <Link to="/landing"><FiX size={20} /></Link> {/* Changed from / to /landing */}
+            <Link to="/"><FiX size={20} /></Link>
           </button>
         </div>
 
