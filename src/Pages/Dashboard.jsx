@@ -6,6 +6,7 @@ import LectureCard from '../components/LectureCard';
 import TestsCard from '../components/TestsCard';
 import AssignmentsCard from '../components/AssignmentsCard';
 import AIMentorCard from '../components/AIMentorCard';
+import AiMentor from '../components/AiMentor';
 
 function Dashboard() {
   return (
@@ -18,6 +19,7 @@ function Dashboard() {
           <TestsCard />
           <AssignmentsCard />
           <AIMentorCard />
+          <AiMentor/>
         </div>
       </div>
       <Footer />
