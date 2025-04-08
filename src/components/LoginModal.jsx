@@ -31,11 +31,15 @@ const LoginModal = ({ onClose, onLogin }) => {
         { headers: { "Content-Type": "application/json" } }
       );
 
+      // Store user data in sessionStorage
+      sessionStorage.setItem("user", JSON.stringify(response.data.user));
+
       if (typeof onLogin === "function") {
         onLogin(response.data);
       }
 
       navigate("/dashboard");
+
       if (typeof onClose === "function") {
         onClose();
       }
@@ -53,7 +57,6 @@ const LoginModal = ({ onClose, onLogin }) => {
   return (
     <div className="fixed inset-0 bg-[#f8f8f8] bg-opacity-50 flex items-center justify-center transition-opacity duration-300 z-50">
       <div className="bg-white rounded-lg w-full max-w-md shadow-xl transform transition-all duration-300 mx-4">
-        {/* Header */}
         <div className="flex justify-between items-center p-5 border-b border-gray-200">
           <h2 className="text-xl font-semibold">Login to WebRoom</h2>
           <button
@@ -65,8 +68,7 @@ const LoginModal = ({ onClose, onLogin }) => {
           </button>
         </div>
 
-        {/* Form */}
-        <form className="p-5 " onSubmit={handleSubmit}>
+        <form className="p-5" onSubmit={handleSubmit}>
           {error && (
             <div className="bg-red-100 text-red-600 p-3 rounded-md mb-5 text-sm">
               {error}
@@ -139,7 +141,6 @@ const LoginModal = ({ onClose, onLogin }) => {
           </button>
         </form>
 
-        {/* Signup Link */}
         <div className="p-4 border-t border-gray-200 text-center text-gray-700">
           <p>
             Don't have an account?{" "}
