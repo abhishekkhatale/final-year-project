@@ -7,8 +7,25 @@ import TestsCard from '../components/TestsCard';
 import AssignmentsCard from '../components/AssignmentsCard';
 import AIMentorCard from '../components/AIMentorCard';
 import AiMentor from '../components/AiMentor';
+import { useState,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+  const navigate = useNavigate()
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const storedUser = sessionStorage.getItem("user");
+
+  useEffect(() => {
+    const storedUser = sessionStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    } else {
+      navigate("/");
+    }
+    setIsLoading(false);
+  }, [navigate]);
+
   return (
     <>
       <Header />

@@ -8,6 +8,7 @@ const UserProfileCard = () => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
       setUser(JSON.parse(storedUser));
+      console.log(user);
     }
   }, []);
 

@@ -6,6 +6,7 @@ import SignupModal from "./components/SignupModal";
 import Dashboard from "./Pages/Dashboard";
 import NotFound from "./components/NotFound";
 import Room from "./Pages/Meeting";
+import AdminPanel from "./Pages/AdminPanel";
 
 function App() {
   return (
@@ -16,7 +17,9 @@ function App() {
       <Route path="/signup" element={<SignupModal />} />
       <Route path="/dashboard" element={<Dashboard/>}/>
       <Route path="/meeting" element={<Room/>} />
+      <Route path="/admin" element={<AdminPanel/>} />
       <Route path="*" element={<NotFound/>} />
+      
       
       
     </Routes>
