@@ -15,6 +15,7 @@ const FilterBar = ({ courses, subs, years, filters, onFilterChange }) => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-black focus:border-black"
             >
               <option value="">All Courses</option>
+              
               {courses.map(course => (
                 <option key={course} value={course}>{course}</option>
               ))}

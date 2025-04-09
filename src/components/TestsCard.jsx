@@ -1,4 +1,5 @@
 import { FiCalendar } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
 const TestsCard = () => (
   <div className="bg-white rounded-xl border border-gray-200 p-6">
@@ -16,9 +17,9 @@ const TestsCard = () => (
           Today, 2:00 PM
         </p>
         <p className="text-gray-600">Duration: 45 minutes</p>
-        <button className="mt-2 w-full bg-black hover:bg-gray-800 text-white border border-black py-2 px-4 rounded-lg transition-colors">
+        <Link to="/test"><button className="mt-2 w-full bg-black hover:bg-gray-800 text-white border border-black py-2 px-4 rounded-lg transition-colors">
           Start Test
-        </button>
+        </button></Link>
       </div>
       <div>
         <h3 className="font-medium text-black">Machine Learning Mid-term</h3>
@@ -27,9 +28,9 @@ const TestsCard = () => (
           Tomorrow, 10:00 AM
         </p>
         <p className="text-gray-600">Duration: 2 hours</p>
-        <button className="mt-2 w-full bg-black hover:bg-gray-800 text-white border border-black py-2 px-4 rounded-lg transition-colors">
+        <Link to="/test"><button className="mt-2 w-full bg-black hover:bg-gray-800 text-white border border-black py-2 px-4 rounded-lg transition-colors">
           Start Test
-        </button>
+        </button></Link>
       </div>
     </div>
   </div>

@@ -50,5 +50,26 @@ export const notes = [
         </ul>
       `
     },
+    {
+        id: 2,
+        img: 'https://via.placeholder.com/150/000000/FFFFFF/?text=Python',
+        title: 'Python Fundamentals',
+        sub: 'Programming',
+        course: 'IT',
+        year: '2nd Year',
+        date: '2023-09-20',
+        description: 'Introduction to Python programming',
+        content: `
+          <h2 class="text-2xl font-bold mb-4">Python Fundamentals</h2>
+          <p class="mb-4">Python is an interpreted, high-level, general-purpose programming language.</p>
+          
+          <h3 class="text-xl font-semibold mb-2">Why Python?</h3>
+          <ul class="list-disc pl-6 mb-4">
+            <li>Easy to learn</li>
+            <li>Versatile</li>
+            <li>Large standard library</li>
+          </ul>
+        `
+      },
     // Add more notes as needed
   ];
