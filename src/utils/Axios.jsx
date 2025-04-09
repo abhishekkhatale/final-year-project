@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    baseURL: "https://final-year-project-api-6xmo.onrender.com" // 🎯 Base API URL
+    baseURL: "https://final-year-project-api-iota.vercel.app" // 🎯 Base API URL
 });
 
 export default instance;
