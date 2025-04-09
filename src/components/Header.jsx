@@ -67,7 +67,7 @@ const Header = () => {
                 <FiAward className="h-5 w-5" />
                 <span className="ml-2">AI Mentor</span>
               </Link>
-              <Link to="/studymaterial" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
+              <Link to="/note" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
                 <FiBook className="h-5 w-5" />
                 <span className="ml-2">Study Material</span>
               </Link>
@@ -121,7 +121,7 @@ const Header = () => {
               <FiAward className="h-5 w-5" />
               <span className="ml-3">AI Mentor</span>
             </Link>
-            <Link to="/studymaterial" className="flex items-center px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors" onClick={() => setIsOpen(false)}>
+            <Link to="/note" className="flex items-center px-3 py-2 text-base font-medium text-gray-900 hover:bg-gray-50 transition-colors" onClick={() => setIsOpen(false)}>
               <FiBook className="h-5 w-5" />
               <span className="ml-3">Study Material</span>
             </Link>

@@ -7,6 +7,8 @@ import Dashboard from "./Pages/Dashboard";
 import NotFound from "./components/NotFound";
 import Room from "./Pages/Meeting";
 import AdminPanel from "./Pages/AdminPanel";
+import NotesList from "./Pages/NotesList";
+import NoteDetail from "./Pages/NoteDetail";
 
 function App() {
   return (
@@ -18,8 +20,9 @@ function App() {
       <Route path="/dashboard" element={<Dashboard/>}/>
       <Route path="/meeting" element={<Room/>} />
       <Route path="/admin" element={<AdminPanel/>} />
+      <Route path="/note" element={<NotesList/>} />
+      <Route path="/note/:id" element={<NoteDetail/>} />
       <Route path="*" element={<NotFound/>} />
-      
       
       
     </Routes>
