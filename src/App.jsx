@@ -9,22 +9,23 @@ import Room from "./Pages/Meeting";
 import AdminPanel from "./Pages/AdminPanel";
 import NotesList from "./Pages/NotesList";
 import NoteDetail from "./Pages/NoteDetail";
+import TestPage from "./Pages/TestPage";
+import TestResult from "./Pages/TestResult";
 
 function App() {
   return (
     <Routes>
-      
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<LoginModal />} />
       <Route path="/signup" element={<SignupModal />} />
-      <Route path="/dashboard" element={<Dashboard/>}/>
-      <Route path="/meeting" element={<Room/>} />
-      <Route path="/admin" element={<AdminPanel/>} />
-      <Route path="/note" element={<NotesList/>} />
-      <Route path="/note/:id" element={<NoteDetail/>} />
-      <Route path="*" element={<NotFound/>} />
-      
-      
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/meeting" element={<Room />} />
+      <Route path="/admin" element={<AdminPanel />} />
+      <Route path="/note" element={<NotesList />} />
+      <Route path="/note/:id" element={<NoteDetail />} />
+      <Route path="/test" element={<TestPage />} />
+      <Route path="/test-result" element={<TestResult />} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
