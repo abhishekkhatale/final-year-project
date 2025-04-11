@@ -12,6 +12,8 @@ import NoteDetail from "./Pages/NoteDetail";
 import TestPage from "./Pages/TestPage";
 import TestResult from "./Pages/TestResult";
 import Aiquiz from "./components/Aiquiz";
+import "/styles/note-content.css"
+import "/styles/editor-styles.css"
 
 function App() {
   return (
