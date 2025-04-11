@@ -11,6 +11,7 @@ import NotesList from "./Pages/NotesList";
 import NoteDetail from "./Pages/NoteDetail";
 import TestPage from "./Pages/TestPage";
 import TestResult from "./Pages/TestResult";
+import Aiquiz from "./components/Aiquiz";
 
 function App() {
   return (
@@ -20,12 +21,13 @@ function App() {
       <Route path="/login" element={<LoginModal />} />
       <Route path="/signup" element={<SignupModal />} />
       <Route path="/dashboard" element={<Dashboard/>}/>
-      <Route path="/meeting" element={<Room/>} />
-      <Route path="/admin" element={<AdminPanel/>} />
-      <Route path="/note" element={<NotesList/>} />
+      <Route path="/meeting" element={<Room />} />
+      <Route path="/admin" element={<AdminPanel />} />
+      <Route path="/note" element={<NotesList />} />
       <Route path="/note/:id" element={<NoteDetail/>} />
       <Route path="/test/:id" element={<TestPage />} /> {/*Test Route*/}
       <Route path="/result" element={<TestResult />} />{/*Test Route*/}
+      <Route path="/aiquiz" element={<Aiquiz />} />
       <Route path="*" element={<NotFound/>} />
       
       

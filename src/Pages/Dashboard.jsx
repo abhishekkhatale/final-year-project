@@ -6,7 +6,7 @@ import LectureCard from '../components/LectureCard';
 import TestsCard from '../components/TestsCard';
 import AssignmentsCard from '../components/AssignmentsCard';
 import AIMentorCard from '../components/AIMentorCard';
-import AiMentor from '../components/AiMentor';
+// import AiMentor from '../components/AiMentor';
 import { useState,useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
