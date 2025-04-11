@@ -1,14 +1,50 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { testQuestions, testDetails } from '../data/testData';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams, Link } from 'react-router-dom';
+import axios from '../utils/Axios';
 import Timer from '../components/Timer';
 import SuccessModal from '../components/SuccessModal';
 
 const TestPage = () => {
+  const [testDetails, setTestDetails] = useState({});
+  const [testQuestions, setTestQuestions] = useState([]);
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedOptions, setSelectedOptions] = useState(Array(testQuestions.length).fill(null));
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [timeUp, setTimeUp] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchTest = async () => {
+      try {
+        const res = await axios.get(`/Test/${id}`);
+        const data = res.data;
+
+        if (!data || !data.title || !data.duration) {
+          console.error("Invalid test data:", data);
+          return;
+        }
+
+        const questionFields = ['question1', 'question2', 'question3', 'question4', 'question5'];
+        const questions = questionFields
+          .map(field => data[field]?.[0])
+          .filter(Boolean);
+
+        setTestDetails({
+          title: data.title,
+          totalQuestions: questions.length,
+          duration: parseInt(data.duration)
+        });
+
+        setTestQuestions(questions);
+        setSelectedOptions(Array(questions.length).fill(null));
+      } catch (err) {
+        console.error("Error fetching test data:", err);
+      }
+    };
+
+    fetchTest();
+  }, [id]);
 
   const handleOptionSelect = (optionIndex) => {
     const newSelectedOptions = [...selectedOptions];
@@ -28,33 +64,50 @@ const TestPage = () => {
     }
   };
 
-  const handleSubmit = () => {
-    setShowModal(true);
-  };
-
   const handleTimeUp = () => {
     setTimeUp(true);
-    setShowModal(true);
+    handleSubmit();
   };
 
-  const calculateScore = () => {
-    let score = 0;
-    selectedOptions.forEach((selected, index) => {
-      if (selected === testQuestions[index].correctAnswer) {
-        score += 1;
-      }
-    });
-    return score;
+  const handleSubmit = async () => {
+    try {
+      const studentAnswers = selectedOptions.map((index, i) => {
+        return index !== null ? testQuestions[i].options[index] : "";
+      });
+
+      const res = await axios.post('/Test/calculate-test', {
+        testId: id,
+        studentAnswers
+      });
+
+      const { score, details } = res.data;
+
+      sessionStorage.setItem("testResults", JSON.stringify({
+        score,
+        details,
+        totalQuestions: testQuestions.length,
+        title: testDetails.title,
+        selectedOptions,
+        questions: testQuestions
+      }));
+
+      setShowModal(true);
+
+      setTimeout(() => {
+        navigate('/result');
+      }, 2000);
+    } catch (err) {
+      console.error("Error submitting test:", err);
+      alert("Failed to submit test. Try again.");
+    }
   };
 
-  // Save results to localStorage before redirecting
-  if (showModal) {
-    localStorage.setItem('testResults', JSON.stringify({
-      score: calculateScore(),
-      totalQuestions: testQuestions.length,
-      selectedOptions,
-      questions: testQuestions
-    }));
+  if (!testQuestions.length) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading test...</p>
+      </div>
+    );
   }
 
   return (
@@ -73,7 +126,6 @@ const TestPage = () => {
 
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-3xl mx-auto bg-gray-50 rounded-lg shadow-md p-6 border border-gray-200">
-          {/* Progress indicator */}
           <div className="mb-6">
             <div className="flex justify-between mb-2">
               <span className="text-sm font-medium">
@@ -91,13 +143,11 @@ const TestPage = () => {
             </div>
           </div>
 
-          {/* Question */}
           <div className="mb-8">
             <h2 className="text-xl font-bold mb-4">
-              {testQuestions[currentQuestion].question}
+              {testQuestions[currentQuestion].title}
             </h2>
             
-            {/* Options */}
             <div className="space-y-3">
               {testQuestions[currentQuestion].options.map((option, index) => (
                 <div 
@@ -115,7 +165,6 @@ const TestPage = () => {
             </div>
           </div>
 
-          {/* Navigation buttons */}
           <div className="flex justify-between">
             <div>
               {currentQuestion > 0 && (
@@ -157,11 +206,7 @@ const TestPage = () => {
         </div>
       </main>
 
-      <footer className="bg-black text-white py-6 mt-12">
-        <div className="container mx-auto px-4 text-center">
-          <p>© {new Date().getFullYear()} Study Test App</p>
-        </div>
-      </footer>
+      
     </div>
   );
 };

@@ -9,6 +9,8 @@ import Room from "./Pages/Meeting";
 import AdminPanel from "./Pages/AdminPanel";
 import NotesList from "./Pages/NotesList";
 import NoteDetail from "./Pages/NoteDetail";
+import TestPage from "./Pages/TestPage";
+import TestResult from "./Pages/TestResult";
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
       <Route path="/admin" element={<AdminPanel/>} />
       <Route path="/note" element={<NotesList/>} />
       <Route path="/note/:id" element={<NoteDetail/>} />
+      <Route path="/test/:id" element={<TestPage />} /> {/*Test Route*/}
+      <Route path="/result" element={<TestResult />} />{/*Test Route*/}
       <Route path="*" element={<NotFound/>} />
       
       

@@ -6,7 +6,7 @@ const SuccessModal = ({ onClose }) => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigate('/test-result');
+      navigate('/result');
     }, 2000);
 
     return () => clearTimeout(timer);

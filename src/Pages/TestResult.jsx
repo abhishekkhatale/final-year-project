@@ -1,12 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 
 const TestResult = () => {
   const [results, setResults] = useState(null);
 
   useEffect(() => {
-    const savedResults = localStorage.getItem('testResults');
+    const savedResults = sessionStorage.getItem('testResults');
     if (savedResults) {
       setResults(JSON.parse(savedResults));
     }
@@ -17,8 +16,8 @@ const TestResult = () => {
       <div className="min-h-screen bg-white text-black flex items-center justify-center">
         <div className="text-center">
           <h1 className="text-4xl font-bold mb-4">No Test Results Found</h1>
-          <Link 
-            to="/dashboard" 
+          <Link
+            to="/dashboard"
             className="text-black font-medium hover:underline transition-all"
           >
             ← Back to Dashboard
@@ -34,7 +33,7 @@ const TestResult = () => {
     <div className="min-h-screen bg-white text-black">
       <header className="bg-black text-white py-6 shadow-lg">
         <div className="container mx-auto px-4">
-          <h1 className="text-3xl font-bold">Test Results</h1>
+          <h1 className="text-3xl font-bold">{results.title} - Results</h1>
         </div>
       </header>
 
@@ -43,7 +42,7 @@ const TestResult = () => {
           {/* Score Summary */}
           <div className="bg-gray-50 rounded-lg shadow-md p-6 border border-gray-200 mb-8 text-center">
             <h2 className="text-2xl font-bold mb-4">Your Score</h2>
-            
+
             {/* Circular progress */}
             <div className="relative w-40 h-40 mx-auto mb-6">
               <svg className="w-full h-full" viewBox="0 0 100 100">
@@ -83,7 +82,9 @@ const TestResult = () => {
               </div>
               <div className="bg-white p-4 rounded-lg border border-gray-200">
                 <div className="text-sm text-gray-600">Incorrect</div>
-                <div className="text-2xl font-bold text-red-500">{results.totalQuestions - results.score}</div>
+                <div className="text-2xl font-bold text-red-500">
+                  {results.totalQuestions - results.score}
+                </div>
               </div>
               <div className="bg-white p-4 rounded-lg border border-gray-200">
                 <div className="text-sm text-gray-600">Total</div>
@@ -91,8 +92,8 @@ const TestResult = () => {
               </div>
             </div>
 
-            <Link 
-              to="/dashboard" 
+            <Link
+              to="/dashboard"
               className="inline-block bg-black text-white px-6 py-2 rounded-lg hover:bg-gray-800 transition-all"
             >
               Back to Dashboard
@@ -102,60 +103,55 @@ const TestResult = () => {
           {/* Question Review */}
           <h2 className="text-2xl font-bold mb-4">Question Review</h2>
           <div className="space-y-6">
-            {results.questions.map((question, index) => {
-              const isCorrect = results.selectedOptions[index] === question.correctAnswer;
-              const userAnswer = results.selectedOptions[index] !== null 
-                ? question.options[results.selectedOptions[index]] 
-                : "Not answered";
-              const correctAnswer = question.options[question.correctAnswer];
+            {results.details.map((q, index) => (
+              <div
+                key={index}
+                className={`p-6 rounded-lg border ${
+                  q.isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'
+                }`}
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="font-bold">Question {index + 1}</h3>
+                  <span
+                    className={`px-2 py-1 rounded text-xs font-medium ${
+                      q.isCorrect
+                        ? 'bg-green-100 text-green-800'
+                        : 'bg-red-100 text-red-800'
+                    }`}
+                  >
+                    {q.isCorrect ? 'Correct' : 'Incorrect'}
+                  </span>
+                </div>
+                <p className="mb-4">{q.question}</p>
 
-              return (
-                <div 
-                  key={question.id}
-                  className={`p-6 rounded-lg border ${
-                    isCorrect ? 'border-green-500 bg-green-50' : 'border-red-500 bg-red-50'
-                  }`}
-                >
-                  <div className="flex justify-between items-start mb-2">
-                    <h3 className="font-bold">Question {index + 1}</h3>
-                    <span className={`px-2 py-1 rounded text-xs font-medium ${
-                      isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                    }`}>
-                      {isCorrect ? 'Correct' : 'Incorrect'}
-                    </span>
-                  </div>
-                  <p className="mb-4">{question.question}</p>
-                  
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <div className="text-sm font-medium text-gray-600 mb-1">Your Answer</div>
-                      <div className={`p-3 rounded ${
-                        isCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                      }`}>
-                        {userAnswer}
-                      </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <div className="text-sm font-medium text-gray-600 mb-1">
+                      Your Answer
                     </div>
-                    {!isCorrect && (
-                      <div>
-                        <div className="text-sm font-medium text-gray-600 mb-1">Correct Answer</div>
-                        <div className="p-3 rounded bg-green-100 text-green-800">
-                          {correctAnswer}
-                        </div>
-                      </div>
-                    )}
+                    <div
+                      className={`p-3 rounded ${
+                        q.isCorrect
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-red-100 text-red-800'
+                      }`}
+                    >
+                      {q.studentAnswer || "Not Answered"}
+                    </div>
                   </div>
-
-                  {question.explanation && (
-                    <div className="mt-4">
-                      <div className="text-sm font-medium text-gray-600 mb-1">Explanation</div>
-                      <div className="p-3 rounded bg-gray-100 text-gray-800">
-                        {question.explanation}
+                  {!q.isCorrect && (
+                    <div>
+                      <div className="text-sm font-medium text-gray-600 mb-1">
+                        Correct Answer
+                      </div>
+                      <div className="p-3 rounded bg-green-100 text-green-800">
+                        {q.correctAnswer}
                       </div>
                     </div>
                   )}
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </div>
       </main>
