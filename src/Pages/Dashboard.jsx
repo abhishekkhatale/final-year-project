@@ -36,7 +36,7 @@ function Dashboard() {
           <TestsCard />
           <AssignmentsCard />
           <AIMentorCard />
-          <AiMentor/>
+          {/* <AiMentor/> */}
         </div>
       </div>
       <Footer />
