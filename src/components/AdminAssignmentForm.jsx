@@ -1,5 +1,5 @@
 "use client"
-import { FaLink, FaQuestionCircle } from "react-icons/fa";
+import { FaLink, FaQuestionCircle, FaUserTie } from "react-icons/fa";
 
 const AdminAssignmentForm = ({ newAssignment, setNewAssignment, handleAddAssignment }) => {
   return (
@@ -18,25 +18,38 @@ const AdminAssignmentForm = ({ newAssignment, setNewAssignment, handleAddAssignm
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
             value={newAssignment.title}
             onChange={(e) => setNewAssignment({ ...newAssignment, title: e.target.value })}
-            placeholder="Binary Search Tree Implementation"
+            placeholder="Introduction to Data Structures"
             required
           />
         </div>
 
         <div>
           <label className="block text-gray-700 mb-2 font-medium">Course</label>
-          <select
+          <input
+            type="text"
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
             value={newAssignment.course}
             onChange={(e) => setNewAssignment({ ...newAssignment, course: e.target.value })}
+            placeholder="CS101"
             required
-          >
-            <option value="">Select Course</option>
-            <option value="cs101">CS101: Introduction to Computer Science</option>
-            <option value="cs201">CS201: Data Structures and Algorithms</option>
-            <option value="cs301">CS301: Machine Learning</option>
-            <option value="cs401">CS401: Neural Networks</option>
-          </select>
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 mb-2 font-medium">Instructor</label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaUserTie className="text-gray-400" />
+            </div>
+            <input
+              type="text"
+              className="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+              value={newAssignment.instructor}
+              onChange={(e) => setNewAssignment({ ...newAssignment, instructor: e.target.value })}
+              placeholder="Dr. John Doe"
+              required
+            />
+          </div>
         </div>
 
         <div>
@@ -45,9 +58,26 @@ const AdminAssignmentForm = ({ newAssignment, setNewAssignment, handleAddAssignm
             className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500 min-h-[150px]"
             value={newAssignment.description}
             onChange={(e) => setNewAssignment({ ...newAssignment, description: e.target.value })}
-            placeholder="Implement a binary search tree with insert, delete, and search operations..."
+            placeholder="Complete the exercises on arrays and linked lists."
             required
           />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 mb-2 font-medium">Assignment Link</label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <FaLink className="text-gray-400" />
+            </div>
+            <input
+              type="url"
+              className="w-full pl-10 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+              value={newAssignment.link}
+              onChange={(e) => setNewAssignment({ ...newAssignment, link: e.target.value })}
+              placeholder="https://example.com/datastructures.pdf"
+              required
+            />
+          </div>
         </div>
 
         <div>
