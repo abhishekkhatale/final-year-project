@@ -48,7 +48,12 @@ const TestsCard = () => {
 
       <div className="space-y-6 max-h-96 overflow-y-auto pr-2">
         {tests.map((test) => {
-          const startDate = new Date(test.startTime);
+          const startDate = new Date(test.date);
+          if (test.time) {
+            const [hours, minutes] = test.time.split(':').map(Number);
+            startDate.setHours(hours);
+            startDate.setMinutes(minutes);
+          }
           const dateStr = startDate.toLocaleDateString(undefined, {
             weekday: 'short',
             month: 'short',

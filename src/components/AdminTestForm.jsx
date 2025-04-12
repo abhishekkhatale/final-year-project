@@ -1,14 +1,117 @@
 "use client"
 import { FaClipboardList, FaQuestionCircle, FaPlus, FaTrash } from "react-icons/fa";
+import { useState } from "react";
+import axios from "../utils/Axios";
 
-const AdminTestForm = ({ 
-  newTest, 
-  setNewTest, 
-  handleAddTest, 
-  handleAddQuestion, 
-  handleRemoveQuestion, 
-  handleQuestionChange 
-}) => {
+const AdminTestForm = () => {
+  const [newTest, setNewTest] = useState({
+    title: "",
+    date: "",
+    time: "",
+    duration: "",
+    questions: [
+      {
+        question: "",
+        answer: "", // Added answer field
+        options: ["", "", "", ""],
+        correctAnswer: 0,
+      },
+    ],
+  });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleAddQuestion = () => {
+    if (newTest.questions.length >= 5) return;
+    
+    setNewTest({
+      ...newTest,
+      questions: [
+        ...newTest.questions,
+        {
+          question: "",
+          answer: "", // Added answer field
+          options: ["", "", "", ""],
+          correctAnswer: 0,
+        },
+      ],
+    });
+  };
+
+  const handleRemoveQuestion = (index) => {
+    if (newTest.questions.length <= 1) return;
+    
+    const updatedQuestions = [...newTest.questions];
+    updatedQuestions.splice(index, 1);
+    setNewTest({
+      ...newTest,
+      questions: updatedQuestions,
+    });
+  };
+
+  const handleQuestionChange = (qIndex, field, value) => {
+    const updatedQuestions = [...newTest.questions];
+    
+    if (field.startsWith("option-")) {
+      const optionIndex = parseInt(field.split("-")[1]);
+      updatedQuestions[qIndex].options[optionIndex] = value;
+    } else {
+      updatedQuestions[qIndex][field] = field === "correctAnswer" ? parseInt(value) : value;
+    }
+    
+    setNewTest({
+      ...newTest,
+      questions: updatedQuestions,
+    });
+  };
+
+  const handleAddTest = async (e) => {
+    e.preventDefault();
+    setError("");
+    setIsSubmitting(true);
+    
+    try {
+      const testData = {
+        title: newTest.title,
+        date: newTest.date,
+        time: newTest.time,
+        duration: newTest.duration,
+        ...newTest.questions.reduce((acc, question, index) => ({
+          ...acc,
+          [`question${index + 1}`]: {
+            title: question.question,
+            answer: question.answer, // Include answer in submission
+            options: question.options,
+            correctAnswer: question.correctAnswer
+          }
+        }), {})
+      };
+
+      await axios.post("/Test/create", testData);
+      
+      setNewTest({
+        title: "",
+        date: "",
+        time: "",
+        duration: "",
+        questions: [{
+          question: "",
+          answer: "", // Reset answer field
+          options: ["", "", "", ""],
+          correctAnswer: 0,
+        }],
+      });
+      
+      setError("Test scheduled successfully!");
+      
+    } catch (err) {
+      setError(err.response?.data?.message || "Failed to schedule test");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
@@ -17,6 +120,17 @@ const AdminTestForm = ({
           <FaQuestionCircle size={18} />
         </button>
       </div>
+
+      {error && (
+        <div className={`mb-4 p-3 rounded-md text-sm ${
+          error.includes("success") 
+            ? "bg-green-100 text-green-600" 
+            : "bg-red-100 text-red-600"
+        }`}>
+          {error}
+        </div>
+      )}
+
       <form onSubmit={handleAddTest} className="space-y-6">
         <div>
           <label className="block text-gray-700 mb-2 font-medium">Test Title</label>
@@ -112,6 +226,19 @@ const AdminTestForm = ({
                 />
               </div>
 
+              {/* Added Answer Field */}
+              <div>
+                <label className="block text-gray-700 mb-2 font-medium">Correct Answer</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-gray-500"
+                  value={question.answer}
+                  onChange={(e) => handleQuestionChange(qIndex, "answer", e.target.value)}
+                  placeholder="Answer"
+                  required
+                />
+              </div>
+
               <div className="space-y-3">
                 <label className="block text-gray-700 mb-2 font-medium">Options</label>
                 {question.options.map((option, oIndex) => (
@@ -122,7 +249,7 @@ const AdminTestForm = ({
                       name={`correct-answer-${qIndex}`}
                       value={oIndex}
                       checked={question.correctAnswer === oIndex}
-                      onChange={(e) => handleQuestionChange(qIndex, "correctAnswer", e.target.value)}
+                      onChange={(e) => handleQuestionChange(qIndex, "correctAnswer", parseInt(e.target.value))}
                       required
                     />
                     <input
@@ -143,9 +270,24 @@ const AdminTestForm = ({
         <div className="flex justify-end">
           <button
             type="submit"
-            className="flex items-center gap-2 px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors shadow-sm"
+            className={`flex items-center gap-2 px-6 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-800 transition-colors shadow-sm ${
+              isSubmitting ? "opacity-70 cursor-not-allowed" : ""
+            }`}
+            disabled={isSubmitting}
           >
-            <FaClipboardList /> Schedule Test
+            {isSubmitting ? (
+              <>
+                <svg className="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Scheduling...
+              </>
+            ) : (
+              <>
+                <FaClipboardList /> Schedule Test
+              </>
+            )}
           </button>
         </div>
       </form>
