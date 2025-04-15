@@ -17,11 +17,20 @@ const NotesList = () => {
     year: "",
     search: "",
   })
-  const [isAdmin, setIsAdmin] = useState(true)
+  const [user, setUser] = useState(null)
+  const [isAdmin, setIsAdmin] = useState(false)
   const [editNote, setEditNote] = useState(null)
   const [isUpdating, setIsUpdating] = useState(false)
 
   useEffect(() => {
+    // Check if user is logged in and if they're admin
+    const storedUser = sessionStorage.getItem("user")
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser)
+      setUser(parsedUser)
+      setIsAdmin(parsedUser.email === "admin@gmail.com")
+    }
+
     const fetchNotes = async () => {
       try {
         const response = await axios.get("/notes/")
@@ -92,8 +101,6 @@ const NotesList = () => {
     setIsUpdating(true)
 
     const formData = new FormData()
-
-    // Append all text fields
     formData.append("title", editNote.title)
     formData.append("description", editNote.description)
     formData.append("notesText", editNote.notesText)
@@ -101,7 +108,6 @@ const NotesList = () => {
     formData.append("year", editNote.year)
     formData.append("subject", editNote.subject)
 
-    // Handle image upload - match the field name 'notesFile' as used in the HTML example
     if (editNote.images instanceof File) {
       formData.append("notesFile", editNote.images)
     }
@@ -113,11 +119,10 @@ const NotesList = () => {
         },
       })
 
-      // If successful, update the notes state
       if (response.data) {
         const updatedNotes = notes.map((n) => {
           if (n._id === editNote._id) {
-            return response.data // Use the data returned from the server
+            return response.data
           }
           return n
         })
