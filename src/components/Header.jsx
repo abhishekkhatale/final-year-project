@@ -59,13 +59,10 @@ const Header = () => {
                 <FiHome className="h-5 w-5" />
                 <span className="ml-2">Dashboard</span>
               </Link>
-              <Link to="/ai-roadmap" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
-                <FiMap className="h-5 w-5" />
-                <span className="ml-2">AI Roadmap</span>
-              </Link>
-              <Link to="/ai-mentor" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
+
+              <Link to="/aiquiz" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
                 <FiAward className="h-5 w-5" />
-                <span className="ml-2">AI Mentor</span>
+                <span className="ml-2">AI Mock test</span>
               </Link>
               <Link to="/note" className="inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors">
                 <FiBook className="h-5 w-5" />

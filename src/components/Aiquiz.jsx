@@ -8,10 +8,25 @@ function Aiquiz() {
   const [selectedOption, setSelectedOption] = useState('');
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
+  const [shuffledOptions, setShuffledOptions] = useState([]);
 
   useEffect(() => {
     console.log("Questions from Gemini:", questions);
   }, [questions]);
+
+  useEffect(() => {
+    // Shuffle options only when the question changes
+    if (questions.length > 0 && currentQuestion < questions.length) {
+      const q = questions[currentQuestion];
+      const options = [
+        q.rightoption,
+        q.wrongoption1,
+        q.wrongoption2,
+        q.wrongoption3,
+      ].sort(() => Math.random() - 0.5);
+      setShuffledOptions(options);
+    }
+  }, [currentQuestion, questions]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
@@ -46,6 +61,7 @@ function Aiquiz() {
         <h2 className="text-3xl font-bold mb-6">Quiz Completed ✅</h2>
         <p className="text-xl">Your Score:</p>
         <p className="text-5xl font-extrabold my-4">{score} / {questions.length}</p>
+        <Link to = "/dashboard">
         <button
           onClick={() => {
             setCurrentQuestion(0);
@@ -54,19 +70,14 @@ function Aiquiz() {
           }}
           className="mt-6 px-6 py-3 border border-black text-black rounded-full hover:bg-black hover:text-white transition"
         >
-          Restart Quiz
+          Go to Dashboard
         </button>
+        </Link>
       </div>
     );
   }
 
   const q = questions[currentQuestion];
-  const options = [
-    q.rightoption,
-    q.wrongoption1,
-    q.wrongoption2,
-    q.wrongoption3,
-  ].sort(() => Math.random() - 0.5); // Shuffle
 
   return (
     <div className="bg-white text-black min-h-screen p-4 flex items-center justify-center">
@@ -77,7 +88,7 @@ function Aiquiz() {
         <h1 className="text-2xl sm:text-3xl font-semibold mb-6">{q.question}</h1>
 
         <div className="space-y-4">
-          {options.map((opt, index) => (
+          {shuffledOptions.map((opt, index) => (
             <button
               key={index}
               onClick={() => handleOptionClick(opt)}
@@ -85,7 +96,7 @@ function Aiquiz() {
                 ${
                   selectedOption === opt
                     ? 'bg-black text-white font-bold'
-                    : 'hover:bg-black hover:text-white'
+                    : 'hover:bg-[#3f3f3f] hover:text-white'
                 }`}
             >
               {opt}
@@ -94,9 +105,9 @@ function Aiquiz() {
         </div>
 
         <div className="mt-8 flex justify-between items-center">
-            <Link className="px-6 py-3 rounded-full border border-black text-black hover:bg-black hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed" to="/dashboard">
+          <Link className="px-6 py-3 rounded-full border border-black text-black hover:bg-black hover:text-white transition disabled:opacity-30 disabled:cursor-not-allowed" to="/dashboard">
             Go to dashboard
-            </Link>
+          </Link>
           <button
             onClick={handleNext}
             disabled={!selectedOption}
