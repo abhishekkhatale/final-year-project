@@ -23,7 +23,7 @@ function App() {
       <Route path="/login" element={<LoginModal />} />
       <Route path="/signup" element={<SignupModal />} />
       <Route path="/dashboard" element={<Dashboard/>}/>
-      <Route path="/meeting" element={<Room />} />
+      <Route path="/meeting/:lectureId" element={<Room />} />
       <Route path="/admin" element={<AdminPanel />} />
       <Route path="/note" element={<NotesList />} />
       <Route path="/note/:id" element={<NoteDetail/>} />

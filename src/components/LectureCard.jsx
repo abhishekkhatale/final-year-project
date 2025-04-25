@@ -99,7 +99,7 @@ const LectureCard = () => {
               {lecture.time}
             </p>
             <p className="text-gray-600">Instructor: {lecture.instructor}</p>
-            <Link to="/meeting">
+            <Link to={`/meeting/${lecture._id}`}>
               <button 
                 className={`w-full py-2 px-4 rounded-lg transition-colors ${
                   isLectureActive(lecture)

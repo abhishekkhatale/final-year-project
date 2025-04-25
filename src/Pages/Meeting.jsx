@@ -1,8 +1,10 @@
 import React, { useEffect, useRef } from "react";
 import { ZegoUIKitPrebuilt } from "@zegocloud/zego-uikit-prebuilt";
+import { useParams } from "react-router-dom";
 
 const Room = () => {
   const meetingContainer = useRef(null);
+  const { lectureId } = useParams();
 
   useEffect(() => {
     const appID = 1923271987;
@@ -15,7 +17,7 @@ const Room = () => {
     const userId = sessionStorage.getItem("userId") || Date.now().toString();
     sessionStorage.setItem("userId", userId);
 
-    const roomId = `room-${Math.floor(Math.random() * 100000)}`;
+    const roomId = lectureId;
     const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
       appID,
       serverSecret,
@@ -33,7 +35,7 @@ const Room = () => {
       showScreenSharingButton: true,
       showPreJoinView: false,
     });
-  }, []);
+  }, [lectureId]);
 
   return (
     <div className="bg-[#1c1f2e] w-screen h-screen flex justify-center items-center relative overflow-hidden">
